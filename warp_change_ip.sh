@@ -12,7 +12,7 @@ elif [[ "$input" == "y" ]];then
 fi
 while [[ "$input" == "y" ]]
 do
-    result=$(curl --user-agent "${UA_Browser}" -fsL --write-out %{http_code} --output /dev/null --max-time 100 "https://www.netflix.com/title/81215567" 2>&1)
+    result=$(curl --user-agent "${UA_Browser}" -fsL --write-out %{http_code} --output /dev/null --max-time 10 "https://www.netflix.com/title/81215567" 2>&1)
     if [[ "$result" == "404" ]];then
         echo -e "Originals Only, Changing IP..."
         systemctl restart wg-quick@wgcf
@@ -24,7 +24,7 @@ do
         sleep 3
 	
     elif  [[ "$result" == "200" ]];then
-		region=`tr [:lower:] [:upper:] <<< $(curl --user-agent "${UA_Browser}" -fs --max-time 100 --write-out %{redirect_url} --output /dev/null "https://www.netflix.com/title/80018499" | cut -d '/' -f4 | cut -d '-' -f1)` ;
+		region=`tr [:lower:] [:upper:] <<< $(curl --user-agent "${UA_Browser}" -fs --max-time 10 --write-out %{redirect_url} --output /dev/null "https://www.netflix.com/title/80018499" | cut -d '/' -f4 | cut -d '-' -f1)` ;
 		if [[ ! "$region" ]];then
 			region="US";
 		fi
@@ -34,7 +34,7 @@ do
             sleep 3
         else
             echo -e "Region: ${region} Done, monitoring..."
-            sleep 6
+            sleep 100
         fi
 
     elif  [[ "$result" == "000" ]];then
