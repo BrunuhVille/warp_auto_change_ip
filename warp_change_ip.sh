@@ -16,12 +16,12 @@ do
     if [[ "$result" == "404" ]];then
         echo -e "Originals Only, Changing IP..."
         systemctl restart wg-quick@wgcf
-        sleep 3
+        sleep 5
 	
     elif  [[ "$result" == "403" ]];then
         echo -e "No, Changing IP..."
         systemctl restart wg-quick@wgcf
-        sleep 3
+        sleep 5
 	
     elif  [[ "$result" == "200" ]];then
 		region=`tr [:lower:] [:upper:] <<< $(curl --user-agent "${UA_Browser}" -fs --max-time 10 --write-out %{redirect_url} --output /dev/null "https://www.netflix.com/title/80018499" | cut -d '/' -f4 | cut -d '-' -f1)` ;
