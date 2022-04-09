@@ -31,7 +31,7 @@ do
         if [[ "$region" != "$area" ]];then
             echo -e "Region: ${region} Not match, Changing IP..."
             systemctl restart wg-quick@wgcf
-            sleep 3
+            sleep 5
         else
             echo -e "Region: ${region} Done, monitoring..."
             sleep 100
